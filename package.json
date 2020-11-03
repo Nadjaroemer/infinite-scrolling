@@ -1,0 +1,39 @@
+{
+  "name": "infinite-scrolling",
+  "version": "1.0.0",
+  "description": "infinite scrolling ",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-image-resize": "^0.13.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nadjaroemer/infinite-scrolling.git"
+  },
+  "keywords": [
+    "infinite",
+    "scrolling",
+    "exercise",
+    "school"
+  ],
+  "author": "Nadja Rømer nadja.kuti@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nadjaroemer/infinite-scrolling/issues"
+  },
+  "homepage": "https://github.com/Nadjaroemer/infinite-scrolling#readme"
+}
