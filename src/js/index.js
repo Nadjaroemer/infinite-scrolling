@@ -1,47 +1,49 @@
-let url = new URLSearchParams(window.location.search);
+var offset = 0;
+var count;
 
-let offset = 0;
-
-let nextOffset;
-
-var options = {
-    threshold: [0.2, 0.5, 0.8]
-};
-
-fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`)
-    .then(res => res.json())
-        .then(function(data) {
-
-            let maxOffset = data.count - (data.count % 10);
-
-            nextOffset = offset >= maxOffset ? maxOffset : parseInt(offset) + 10;
-        
-
-            //nextLink.href = `?offset=${nextOffset}`;
-            
-
+function catchEmAll(offset) {
+    fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`)
+        .then(res => res.json())//andet måde at skrive det på: .then(function(response){return respnse.json()}
+            .then(function(data) {
+            count = data.count;
             data.results.forEach(function(result) {//data er den information, jeg har fetchet (check i konsolen), results er Array'et 
-            //console.log(data);
-            
-            
-            let character = document.querySelector("#character");
-            let characterList = document.querySelector(".characterList");
+                //console.log(data);                    //forEach itereringsmetode til Arrayer
+                
+                let template = document.querySelector("#template");//id'en på min template
+                let characterList = document.querySelector(".characterList");//class'en på min ul i section
 
-            let clone = character.content.cloneNode(true);//her laver jeg en klon
-            clone.querySelector(".character").innerText = result.name;//her skal klonen sættes in i html'en
-            
-            characterList.appendChild(clone);
+                let clone = template.content.cloneNode(true);//her laver jeg en klon
+                clone.querySelector(".character").innerText = result.name;//her skal klonen sættes in i html'en
+                
+                characterList.appendChild(clone);
+            });
+
+            var lastChild = document.querySelector(".characterList li:last-child");
+            observer.observe(lastChild);
+
         });
+    };
 
-        function callback(entries) {
-            //var target = entries[0].target;en anden måde at skrive det på
-            var { target, intersectionRatio, isIntersecting } =  entries[0];
-            console.log(entries);
+        var observer = new IntersectionObserver(function(entries) {
+            //console.log(entries);
+            if (entries[0].intersectionRatio <= 0) return;
+            
+            observer.unobserve(entries[0].target);
+            offset = offset + 10;
+            
+            if (offset > count) return;
+            
+            catchEmAll(offset);
+        }, {threshold: 1});
 
-        }
-        
+        /*function callback(entries) {
+        //var target = entries[0].target;en anden måde at skrive det på
+        var { target, intersectionRatio, isIntersecting } =  entries[0];
+        console.log(entries);
         var intObs = new IntersectionObserver(callback, options);
   
 
         intObs.observe(document.querySelector(".characterList li:last-child")); 
-    });
+        };*/
+
+        catchEmAll(offset);
